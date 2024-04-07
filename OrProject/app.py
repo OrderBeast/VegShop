@@ -17,33 +17,33 @@ app.add_middleware(
 )
 
 
-@app.get("/getAllProducts/", response_model=list[schemas.Product])#works
+@app.get("/getAllProducts/", response_model=list[schemas.Product])
 def getAllProducts(db: Session = Depends(get_db)):
     return crud.get_all_products(db)
 
-@app.get("/getAllProductsNames/", response_model=list[str])#works
+@app.get("/getAllProductsNames/", response_model=list[str])
 def getAllProductsnNames(db: Session = Depends(get_db)):
     return crud.get_all_products_names(db)
 
-@app.get("/getProductById/{product_id}", response_model=schemas.Product) #works
+@app.get("/getProductById/{product_id}", response_model=schemas.Product) 
 def getProductByID(product_id: int, db: Session = Depends(get_db)):
     db_product = crud.get_product_by_ID(db, product_id=product_id)
     if db_product is None:
         raise HTTPException(status_code=404, detail="User not found")
     return db_product
 
-@app.get("/getProductByName/{product_name}", response_model=schemas.Product) #works
+@app.get("/getProductByName/{product_name}", response_model=schemas.Product)
 def getProductByName(product_name: str, db: Session = Depends(get_db)):
     db_product = crud.get_product_by_name(db, name=product_name)
     if db_product is None:
         raise HTTPException(status_code=404, detail="User not found")
     return db_product
 
-@app.get("/getAllUsers/", response_model=list[schemas.User]) #works
+@app.get("/getAllUsers/", response_model=list[schemas.User]) 
 def getAllUsers(db: Session = Depends(get_db)):
     return crud.get_all_users(db)
 
-@app.get("/getUserById/{user_id}", response_model=schemas.User) #works
+@app.get("/getUserById/{user_id}", response_model=schemas.User)
 def getUserById(user_id: int, db: Session = Depends(get_db)):
     db_user = crud.get_user_by_id(db, userId=user_id)
     if db_user is None:
@@ -58,7 +58,7 @@ def getOrdersByUserId(user_id: int, db: Session = Depends(get_db)):
 
 
 
-@app.get("/getAllOrders/", response_model=list[schemas.Order])  #works
+@app.get("/getAllOrders/", response_model=list[schemas.Order])  
 def getAllOrders(db: Session = Depends(get_db)):
     return crud.get_all_orders(db)
 

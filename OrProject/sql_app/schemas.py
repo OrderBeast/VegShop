@@ -8,9 +8,6 @@ class ProductBase(BaseModel):
     isPricePerKilo: bool
     imageURL: str
 
-class UpdateStatus(BaseModel):
-    orderID : int 
-    status : str
     
 
 class Product(ProductBase):
@@ -64,17 +61,18 @@ class OrderCreate(OrderBase):
     productIds: list[int]
 
 
-class Order(OrderBase):
+class Order(OrderBase): #checks that an order contains id and a list of prod. 
     orderID : int
     products: list[ProductOrder] = []
     
     class Config:
         from_attributes = True
 
-class AddProduct(BaseModel):
+class AddProduct(BaseModel): #checks that a when adding a product to an order there will 
+    #be all neccecery fields
     orderID : int
     productID : int 
-    quantity: int
+    quantity: int   
 
 class RemoveProductFromOrder(BaseModel):
     orderID : int

@@ -70,11 +70,17 @@ def get_product_by_name(db: Session, name: str): #made in app
 
 
 def delete_product(db:Session,deleteProduct: schemas.deleteProductByName): 
+    product = db.query(models.Product).filter(models.Product.name == deleteProduct.productName).first()
     stmt = (
         delete(models.Product).
-        where (models.Product.name == deleteProduct.productName)
+        where (models.Product.productID == product.productID)
+          )
+    stmt2 = (
+        delete(models.ProductOrder).
+        where (models.ProductOrder.productID == product.productID)
           )
     db.execute(stmt)
+    db.execute(stmt2)
     db.commit()
     
 
@@ -115,12 +121,6 @@ def add_product_to_order(db: Session, addProduct:schemas.AddProduct):
 def get_all_orders(db:Session):#made in app
     return db.query(models.Order).all()
 
-def updateStatus(db:Session,updateStatus:schemas.UpdateStatus):
-    order = db.query(models.Order).filter(models.Order.orderID == updateStatus.orderID).first()
-    print( updateStatus.status)
-    order.orderStatus = updateStatus.status
-    db.commit()
-
 
 def get_orders_by_UserID(db: Session, userID: int):#made in app
     return db.query(models.Order).filter(models.Order.userID == userID).all()
@@ -149,5 +149,5 @@ def get_user_by_id(db:Session,userId: int): #made in app
     return db.query(models.User).filter(models.User.userID == userId).first()
 
 def get_user_by_password_and_username(db:Session,password:str,username:str):
-   return db.query(models.User).filter((models.User.userName == username)and (models.User.password == password)).first()
+   return db.query(models.User).filter((models.User.userName == username) & (models.User.password == password)).first()
 
