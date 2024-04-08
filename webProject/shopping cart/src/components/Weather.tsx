@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 const ApiKey = '9c0f7e8b64e52c8a9e545041aa5143ec';
 const latitude  = '32.109333'
 const longitude   = '34.855499'
-const apiCall = `https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&appid=${ApiKey}&units=metric`
+const apiCall = `https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&appid=${ApiKey}&units=metric `
 
  function useGetWeather() {
     const [weather, setWeather] = useState<any>([]);
@@ -18,5 +18,8 @@ const apiCall = `https://api.openweathermap.org/data/2.5/weather?lat=${latitude}
 
 export function Weather() {
     const weather = useGetWeather();
-    return <><label>{ JSON.stringify(weather)}</label></>
+    const desc = weather.weather[0].description
+    const temprtature = weather.main.temp
+    const text = `${desc} ${temprtature}C° \xa0\xa0\xa0\xa0\xa0\xa0\xa0`
+    return <><h3>{ text}</h3></>
 }

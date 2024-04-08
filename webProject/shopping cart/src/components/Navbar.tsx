@@ -28,6 +28,9 @@ export function Navbar(){
                     Admin 
                 </Nav.Link>}    
             </Nav>
+
+            <Weather></Weather>
+
             
             {cartQuantity>0 && ( <Button onClick={openCart} 
             style={{width: "3rem", height:"3rem" ,position:"relative"}}
@@ -51,7 +54,6 @@ export function Navbar(){
                 </div>
             </Button> )}
             
-            <Weather></Weather>
       </Container>
     </NavBarBs>
     )
