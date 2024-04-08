@@ -45,7 +45,7 @@ userData = {
 
 # crud.update_product(db, schemas.updateProduct(productID=banana.productID,name="apple"))
 # print(banana.name)
-
+crud.Make_Admin(db,1)
 
 
 
@@ -84,5 +84,4 @@ userData = {
 
 order = crud.get_orders_by_orderId(db=db,orderId=6)
 
-json_string = json.dumps(order.products[0].quantity)
-print(json_string)
+

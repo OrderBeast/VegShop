@@ -17,33 +17,33 @@ app.add_middleware(
 )
 
 
-@app.get("/getAllProducts/", response_model=list[schemas.Product])
+@app.get("/getAllProducts/", response_model=list[schemas.Product])#works
 def getAllProducts(db: Session = Depends(get_db)):
     return crud.get_all_products(db)
 
-@app.get("/getAllProductsNames/", response_model=list[str])
+@app.get("/getAllProductsNames/", response_model=list[str])#works
 def getAllProductsnNames(db: Session = Depends(get_db)):
     return crud.get_all_products_names(db)
 
-@app.get("/getProductById/{product_id}", response_model=schemas.Product) 
+@app.get("/getProductById/{product_id}", response_model=schemas.Product) #works
 def getProductByID(product_id: int, db: Session = Depends(get_db)):
     db_product = crud.get_product_by_ID(db, product_id=product_id)
     if db_product is None:
         raise HTTPException(status_code=404, detail="User not found")
     return db_product
 
-@app.get("/getProductByName/{product_name}", response_model=schemas.Product)
+@app.get("/getProductByName/{product_name}", response_model=schemas.Product) #works
 def getProductByName(product_name: str, db: Session = Depends(get_db)):
     db_product = crud.get_product_by_name(db, name=product_name)
     if db_product is None:
         raise HTTPException(status_code=404, detail="User not found")
     return db_product
 
-@app.get("/getAllUsers/", response_model=list[schemas.User]) 
+@app.get("/getAllUsers/", response_model=list[schemas.User]) #works
 def getAllUsers(db: Session = Depends(get_db)):
     return crud.get_all_users(db)
 
-@app.get("/getUserById/{user_id}", response_model=schemas.User)
+@app.get("/getUserById/{user_id}", response_model=schemas.User) #works
 def getUserById(user_id: int, db: Session = Depends(get_db)):
     db_user = crud.get_user_by_id(db, userId=user_id)
     if db_user is None:
@@ -58,7 +58,7 @@ def getOrdersByUserId(user_id: int, db: Session = Depends(get_db)):
 
 
 
-@app.get("/getAllOrders/", response_model=list[schemas.Order])  
+@app.get("/getAllOrders/", response_model=list[schemas.Order])  #works
 def getAllOrders(db: Session = Depends(get_db)):
     return crud.get_all_orders(db)
 
@@ -177,15 +177,4 @@ if __name__ == "__main__":
     import uvicorn
     uvicorn.run(app, host="127.0.0.1", port=8000)
 
-
-
-
-
-
-
-# @app.post("/users/{user_id}/items/", response_model=schemas.Item)
-# def create_item_for_user(
-#     user_id: int, item: schemas.ItemCreate, db: Session = Depends(get_db)
-# ):
-#     return crud.create_user_item(db=db, item=item, user_id=user_id)
 

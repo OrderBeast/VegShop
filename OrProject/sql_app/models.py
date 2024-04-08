@@ -6,30 +6,30 @@ from .database import Base
 class Product(Base):
     __tablename__ = "Products"
 
-    productID = Column(types.Integer, primary_key=True) #defines it as a key 
-    name = Column(types.String,unique=True) # defines as a unique to prevent 
-    price=Column(types.FLOAT)               # 2 products with the same name
+    productID = Column(types.Integer, primary_key=True)
+    name = Column(types.String,unique=True)
+    price=Column(types.FLOAT)
     isPricePerKilo = Column(types.Boolean)
     imageURL=Column(types.String)
 
 
 class ProductOrder(Base):
     __tablename__ = "ProductOrders"
-    orderID = Column(ForeignKey("Orders.orderID"), primary_key=True)#defines it as a key 
-    productID = Column(ForeignKey("Products.productID"), primary_key=True)#defines it as a key 
+    orderID = Column(ForeignKey("Orders.orderID"), primary_key=True)
+    productID = Column(ForeignKey("Products.productID"), primary_key=True)
     quantity = Column(Integer)
-    product : Mapped[Product] = relationship()# defines a relationship
+    product : Mapped[Product] = relationship()
 
 
-class Order(Base): 
+class Order(Base):
     __tablename__ = "Orders"
 
-    orderID = Column(types.Integer, primary_key=True) #defines it as a key 
+    orderID = Column(types.Integer, primary_key=True)
     address = Column(types.String)
     creationDate = Column(types.DateTime)
     userID = Column(ForeignKey("users.userID"))
-    products : Mapped[list[ProductOrder]]  = relationship()# defines a relationship
-
+    orderStatus=Column(types.String,default="pending")
+    products : Mapped[list[ProductOrder]]  = relationship()
 
 class User(Base):
     __tablename__ = "users"
@@ -41,7 +41,6 @@ class User(Base):
     lastName=Column(types.String)
     password = Column(String)
     isAdmin=Column(Boolean, default=False)
-    orders:Mapped[list[Order]] = relationship() # defines a relationship
-
+    orders:Mapped[list[Order]] = relationship()
 
 
