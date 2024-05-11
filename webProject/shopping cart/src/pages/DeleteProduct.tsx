@@ -4,6 +4,8 @@ import DeleteItemForm from '../components/DeleteItemForm';
 
 export function DeleteProduct() {
   const [itemNames, setItemNames] = useState<string[]>([]);
+  const [message, setMessage] = useState<string>("");
+
 
   useEffect(() => {
     fetch("http://127.0.0.1:8000/getAllProductsNames/")
@@ -27,15 +29,19 @@ export function DeleteProduct() {
     .then(response => response.json())
     .then(ob => {
       console.log(ob);
-      // If deletion is successful, update the list of item names
-      setItemNames(prevItemNames => prevItemNames.filter(name => name !== itemName));
-    });
+
+      if(ob.isDeleted) {
+        setItemNames(prevItemNames => prevItemNames.filter(name => name !== itemName));
+      }
+      setMessage(ob.message)
+    }).catch(e=> setMessage("error"));
   }
 
   console.log(itemNames);
-  return (
-    <DeleteItemForm itemNames={itemNames} onDelete={callDeleteProduct} />
-  );
+  return <>
+      <DeleteItemForm itemNames={itemNames} onDelete={callDeleteProduct} />
+    <h3>{message}</h3>
+  </>
 }
 
 export default DeleteProduct;

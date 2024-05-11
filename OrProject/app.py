@@ -166,8 +166,11 @@ def deleteOrder(deleteOrder:schemas.deleteOrder, db: Session = Depends(get_db)):
 @app.post("/deleteProduct/")
 def deleteProduct(deleteProduct:schemas.deleteProductByName, db: Session = Depends(get_db)):
     try:  
-        crud.delete_product(db=db, deleteProduct=deleteProduct)
-        return {"message":"success"}
+        if (crud.is_product_in_any_order(db=db,deleteProduct=deleteProduct)==False):
+            crud.delete_product(db=db, deleteProduct=deleteProduct)
+            return {"message":"success","isDeleted": True}
+        else :
+            return {"message":"Product is already in an order","isDeleted": False}
     except Exception as err:
         print(err)
         raise HTTPException(status_code=404, detail="Error")

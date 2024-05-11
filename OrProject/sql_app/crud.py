@@ -77,7 +77,13 @@ def delete_product(db:Session,deleteProduct: schemas.deleteProductByName):
     db.execute(stmt)
     db.commit()
     
-
+def is_product_in_any_order(db:Session, deleteProduct: schemas.deleteProductByName):
+    Orders=get_all_orders(db)
+    for order in Orders:
+        for productOrder in order.products:
+         if(productOrder.product.name == deleteProduct.productName):
+             return True
+    return False
 
 def delete_order(db:Session,deleteOrder:schemas.deleteOrder):
      stmt=(
